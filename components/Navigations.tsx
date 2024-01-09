@@ -17,11 +17,6 @@ const Navigations: React.FC<NavigationsProps> = () => {
 					<FiHome size="22px" /> Home
 				</Link>
 			</li>
-			<li className={`opacity-[0.67] pl-6 py-[10px] ${pathname === "/goods" ? "active-link" : ""}`}>
-				<Link className="flex items-center gap-3" href="/goods">
-					<TbCube size="22px" /> Products
-				</Link>
-			</li>
 		</ul>
 	);
 };
