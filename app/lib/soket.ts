@@ -1,14 +1,18 @@
-import { io } from 'socket.io-client';
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
-const socket = io("https://dotlabs.onrender.com/");
-export let applications: any = [];
+const httpServer = createServer();
+const io = new Server(httpServer, {
+	cors: {
+		origin: "*",
+		methods: ["GET", "POST"],
+	},
+});
 
-export function socketGet() {
-    socket.on("connect", () => {
-        console.log('connected')
-        socket.emit("getApplications", {});
-        socket.on("get", (data) => {
-            applications = data;
-        });
-    });
-}
+io.on("connection", async (socket: any) => {
+	console.log(socket.io);
+});
+
+httpServer.listen(5000, () => {
+	console.log("Server is listening to the port 5000");
+});

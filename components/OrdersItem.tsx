@@ -1,13 +1,14 @@
 import React from "react";
 
-function OrdersItem({ number }: any) {
+function OrdersItem({ item, idx }: any) {
+    
     return (
         <div className="flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]">
             <div className="flex items-start gap-3">
-                <span>{number}.</span>
+                <span>{idx + 1}.</span>
                 <div>
-                    <p className="font-medium">Сиддиков Мирсаид</p>
-                    <p className="text-black mt-1">+998 (90) 222-74-64</p>
+                    <p className="font-medium">{item.name}</p>
+                    <p className="text-black mt-1">{item.phone}</p>
                 </div>
             </div>
             <div className="flex items-center gap-3">
