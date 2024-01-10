@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { useCookies } from 'react-cookie';
 
 type Inputs = {
-	login: string;
+	username: string;
 	password: string;
 };
 
@@ -53,18 +53,18 @@ const Login = () => {
 
 	return (
 		<form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
-			<label htmlFor="login" className="text-[9px] uppercase mb-2">
+			<label htmlFor="username" className="text-[9px] uppercase mb-2">
 				ЛОГИН
 			</label>
 			<input
-				id="login"
+				id="username"
 				className="p-3 rounded-md"
 				type="text"
 				placeholder="Логин"
-				{...register("login", { required: true })}
+				{...register("username", { required: true })}
 			/>
 			<span className="text-red-500">
-				{errors.login && "Заполните это поле"}
+				{errors.username && "Заполните это поле"}
 			</span>
 			<br />
 			<label htmlFor="password" className="text-[9px] uppercase mb-2">
