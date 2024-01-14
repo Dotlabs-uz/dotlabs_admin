@@ -1,6 +1,14 @@
 import axios from "axios";
+import Link from "next/link";
 import React from "react";
 import { useCookies } from "react-cookie";
+import { BsThreeDots } from "react-icons/bs";
+import { Button } from "./ui/button";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
 function OrdersItem({ item, idx }: any) {
     const [cookies] = useCookies(["token"]);
@@ -8,7 +16,7 @@ function OrdersItem({ item, idx }: any) {
     function ChangeStatus(stat: string) {
         axios
             .patch(
-                `https://dotlabs.onrender.com/applications/${item._id}`,
+                `https://dotlabs.onrender.com/applications/${item?._id}`,
                 {
                     status: stat,
                 },
@@ -22,38 +30,95 @@ function OrdersItem({ item, idx }: any) {
     }
 
     return (
-        <div className="flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]">
+        <div
+            className={`flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc] ${
+                item?.status === "new"
+                    ? "bg-[#F7D17C] text-black"
+                    : item?.status === "inProgress"
+                    ? "bg-[#F98080] text-black"
+                    : item?.status === "pending"
+                    ? "bg-[#BB79F8] text-black"
+                    : "text-black"
+            }`}
+        >
             <div className="flex items-start gap-3">
                 <span>{idx + 1}.</span>
                 <div>
-                    <p className="font-medium">{item.name}</p>
-                    <p className="text-black mt-1">{item.phone}</p>
+                    <p className="font-medium">{item?.name}</p>
+                    <a href={`tel:+${item?.phone}`} className="mt-1">+{item?.phone}</a>
                 </div>
             </div>
-            <div className="flex items-center gap-3">
-                {item.status === "new" ? (
-                    <button
-                        onClick={() => ChangeStatus("viewed")}
-                        className="px-3 py-1 border border-black rounded-md text-black font-semibold hover:bg-black hover:text-white transition ease-linear"
-                    >
-                        Посмотрел
-                    </button>
-                ) : item.status === "viewed" ? (
-                    <button
-                        onClick={() => ChangeStatus("called")}
-                        className="px-3 py-1 border-2 border-blue-700 rounded-md text-blue-700 font-semibold hover:bg-blue-700 hover:text-white transition ease-linear"
-                    >
-                        Позвонил
-                    </button>
-                ) : null}
 
-                {item.status !== "deleted" ? (
-                    <button
-                        onClick={() => ChangeStatus("deleted")}
-                        className="px-3 py-1 border-2 border-red-700 rounded-md text-red-700 font-semibold hover:bg-red-700 hover:text-white transition ease-linear"
-                    >
-                        Отчистить
-                    </button>
+            <p>{item?.status}</p>
+
+            <div className="relative">
+                {item?.status === "new" ||
+                item?.status === "inProgress" ||
+                item?.status === "pending" ? (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger className={"outline-none"}>
+                            <BsThreeDots size={25} className="cursor-pointer" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent
+                            className={"flex flex-col -ml-16 -mt-11 gap-1"}
+                        >
+                            {item?.status === "new" ? (
+                                <Button
+                                    onClick={() => ChangeStatus("inProgress")}
+                                    variant={"secondary"}
+                                >
+                                    В процессе
+                                </Button>
+                            ) : item?.status === "inProgress" ? (
+                                <>
+                                    <Button
+                                        onClick={() => ChangeStatus("pending")}
+                                    >
+                                        Ждём ответа
+                                    </Button>
+                                    <Button
+                                        onClick={() => ChangeStatus("closed")}
+                                    >
+                                        Получили заказ
+                                    </Button>
+                                    <Button
+                                        onClick={() =>
+                                            ChangeStatus("noResponse")
+                                        }
+                                    >
+                                        Не ответил
+                                    </Button>
+                                    <Button
+                                        onClick={() => ChangeStatus("declined")}
+                                        variant={"destructive"}
+                                    >
+                                        Отказ
+                                    </Button>
+                                </>
+                            ) : item?.status === "pending" ? (
+                                <>
+                                    <Button
+                                        onClick={() => ChangeStatus("closed")}
+                                    >
+                                        Получили заказ
+                                    </Button>
+                                    <Button
+                                        onClick={() =>
+                                            ChangeStatus("noResponse")
+                                        }
+                                    >
+                                        Не ответил
+                                    </Button>
+                                    <Button
+                                        onClick={() => ChangeStatus("declined")}
+                                        variant={"destructive"}
+                                    >
+                                        Отказ
+                                    </Button>
+                                </>
+                            ) : null}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 ) : null}
             </div>
         </div>
