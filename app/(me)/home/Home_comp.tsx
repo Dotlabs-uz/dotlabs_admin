@@ -10,6 +10,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import io from "socket.io-client";
 
 interface Home_compProps {}
@@ -19,6 +20,9 @@ const Home_comp: React.FC<Home_compProps> = () => {
     const [sourceArchiveOrders, setSourceArchiveOrders] = useState([]);
     const [archiveOrders, setArchiveOrders] = useState([]);
     const [heanleChangeStatus, setHeanleChangeStatus] = useState("all");
+
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
 
     const socket = io("https://dotlabs.onrender.com");
 
@@ -151,100 +155,146 @@ const Home_comp: React.FC<Home_compProps> = () => {
                             <Skeleton className="p-1 rounded-full bg-[gray]" />
                             <Skeleton className="p-1 rounded-full bg-[gray]" />
                         </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
 
-                        {/* <div className="relative">
-                            {item?.status === "new" ||
-                            item?.status === "inProgress" ||
-                            item?.status === "pending" ? (
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger
-                                        className={"outline-none"}
-                                    >
-                                        <BsThreeDots
-                                            size={25}
-                                            className="cursor-pointer"
-                                        />
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent
-                                        className={
-                                            "flex flex-col -ml-16 -mt-11 gap-1"
-                                        }
-                                    >
-                                        {item?.status === "new" ? (
-                                            <Button
-                                                onClick={() =>
-                                                    ChangeStatus("inProgress")
-                                                }
-                                                variant={"secondary"}
-                                            >
-                                                В процессе
-                                            </Button>
-                                        ) : item?.status === "inProgress" ? (
-                                            <>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus("pending")
-                                                    }
-                                                >
-                                                    Ждём ответа
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus("closed")
-                                                    }
-                                                >
-                                                    Получили заказ
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus(
-                                                            "noResponse"
-                                                        )
-                                                    }
-                                                >
-                                                    Не ответил
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus("declined")
-                                                    }
-                                                    variant={"destructive"}
-                                                >
-                                                    Отказ
-                                                </Button>
-                                            </>
-                                        ) : item?.status === "pending" ? (
-                                            <>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus("closed")
-                                                    }
-                                                >
-                                                    Получили заказ
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus(
-                                                            "noResponse"
-                                                        )
-                                                    }
-                                                >
-                                                    Не ответил
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        ChangeStatus("declined")
-                                                    }
-                                                    variant={"destructive"}
-                                                >
-                                                    Отказ
-                                                </Button>
-                                            </>
-                                        ) : null}
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            ) : null}
-                        </div> */}
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
+                    </div>
+                    <div
+                        className={
+                            "flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]"
+                        }
+                    >
+                        <Skeleton className="flex items-start gap-3">
+                            <Skeleton className="bg-[gray] h-[16px] w-[5px]" />
+                            <div>
+                                <Skeleton className="bg-[gray] w-[100px] p-1 rounded-full" />
+                                <Skeleton className="bg-[gray] w-[50px] p-1 rounded-full mt-2" />
+                            </div>
+                        </Skeleton>
+
+                        <Skeleton className="w-[50px] p-1 rounded-full bg-[gray]" />
+                        <div className="flex items-center gap-1">
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                            <Skeleton className="p-1 rounded-full bg-[gray]" />
+                        </div>
                     </div>
                 </Skeleton>
             )}

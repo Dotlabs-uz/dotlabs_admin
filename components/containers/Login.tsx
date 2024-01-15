@@ -24,6 +24,8 @@ const Login = () => {
 		removeCookie('token')
 	}, []);
 
+	
+
 
 	const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		setLoading(true);

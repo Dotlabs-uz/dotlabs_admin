@@ -1,6 +1,5 @@
 import axios from "axios";
-import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { BsThreeDots } from "react-icons/bs";
 import { Button } from "./ui/button";
@@ -12,8 +11,11 @@ import {
 
 function OrdersItem({ item, idx }: any) {
     const [cookies] = useCookies(["token"]);
+    const [loading, setLoading] = useState(false);
 
     function ChangeStatus(stat: string) {
+        setLoading(true);
+
         axios
             .patch(
                 `https://dotlabs.onrender.com/applications/${item?._id}`,
@@ -26,6 +28,11 @@ function OrdersItem({ item, idx }: any) {
                     },
                 }
             )
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    setLoading(false);
+                }
+            })
             .catch((err) => console.log(err));
     }
 
@@ -45,7 +52,9 @@ function OrdersItem({ item, idx }: any) {
                 <span>{idx + 1}.</span>
                 <div>
                     <p className="font-medium">{item?.name}</p>
-                    <a href={`tel:+${item?.phone}`} className="mt-1">+{item?.phone}</a>
+                    <a href={`tel:+${item?.phone}`} className="mt-1">
+                        +{item?.phone}
+                    </a>
                 </div>
             </div>
 
@@ -64,8 +73,9 @@ function OrdersItem({ item, idx }: any) {
                         >
                             {item?.status === "new" ? (
                                 <Button
-                                    onClick={() => ChangeStatus("inProgress")}
+                                    onClick={(e:any) => ChangeStatus("inProgress")}
                                     variant={"secondary"}
+                                    disabled={loading}
                                 >
                                     В процессе
                                 </Button>
@@ -73,11 +83,13 @@ function OrdersItem({ item, idx }: any) {
                                 <>
                                     <Button
                                         onClick={() => ChangeStatus("pending")}
+                                        disabled={loading}
                                     >
                                         Ждём ответа
                                     </Button>
                                     <Button
                                         onClick={() => ChangeStatus("closed")}
+                                        disabled={loading}
                                     >
                                         Получили заказ
                                     </Button>
@@ -85,12 +97,14 @@ function OrdersItem({ item, idx }: any) {
                                         onClick={() =>
                                             ChangeStatus("noResponse")
                                         }
+                                        disabled={loading}
                                     >
                                         Не ответил
                                     </Button>
                                     <Button
                                         onClick={() => ChangeStatus("declined")}
                                         variant={"destructive"}
+                                        disabled={loading}
                                     >
                                         Отказ
                                     </Button>
@@ -99,10 +113,12 @@ function OrdersItem({ item, idx }: any) {
                                 <>
                                     <Button
                                         onClick={() => ChangeStatus("closed")}
+                                        disabled={loading}
                                     >
                                         Получили заказ
                                     </Button>
                                     <Button
+                                        disabled={loading}
                                         onClick={() =>
                                             ChangeStatus("noResponse")
                                         }
@@ -110,6 +126,7 @@ function OrdersItem({ item, idx }: any) {
                                         Не ответил
                                     </Button>
                                     <Button
+                                        disabled={loading}
                                         onClick={() => ChangeStatus("declined")}
                                         variant={"destructive"}
                                     >
