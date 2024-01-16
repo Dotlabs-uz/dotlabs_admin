@@ -1,16 +1,18 @@
 "use client";
 import OrdersItem from "@/components/OrdersItem";
 import Skleton from "@/components/Skeleton";
+
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-interface Home_compProps {}
+interface Closed_compProps {}
 
-const Home_comp: React.FC<Home_compProps> = () => {
+const Closed_comp: React.FC<Closed_compProps> = () => {
+    const [closedOrders, setClosedOrders] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [orders, setOrders] = useState([]);
 
     const socket = io("https://dotlabs.onrender.com");
+
 
     useEffect(() => {
         if (!socket.connected) {
@@ -22,23 +24,15 @@ const Home_comp: React.FC<Home_compProps> = () => {
         }
 
         socket.on("get", (data: any) => {
-            let orderArr: any = [];
+            let closedArr: any = [];
 
             data.filter((item: any) => {
-                if (
-                    item.status === "inProgress" ||
-                    item.status === "new" ||
-                    item.status === "pending"
-                ) {
-                    if (item.status === "new") {
-                        orderArr.unshift(item);
-                    } else {
-                        orderArr.push(item);
-                    }
+                if (item.status === "closed") {
+                    closedArr.push(item);
                 }
             });
-            setOrders(orderArr);
-            setLoading(false);
+            setClosedOrders(closedArr);
+            setLoading(false)
         });
     }, []);
 
@@ -47,11 +41,11 @@ const Home_comp: React.FC<Home_compProps> = () => {
             {!loading ? (
                 <div className="overflow-x-auto shadow-md sm:rounded-lg min-h-[80vh] relative pb-[80px]">
                     <div className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        {orders.map((item: any, key: any) => (
+                        {closedOrders.map((item: any, key: any) => (
                             <OrdersItem key={key} item={item} idx={key} />
                         ))}
 
-                        {orders.length === 0 && (
+                        {closedOrders.length === 0 && (
                             <div className="w-full h-[10vh] flex items-center justify-center">
                                 Ничего не найдено
                             </div>
@@ -59,10 +53,10 @@ const Home_comp: React.FC<Home_compProps> = () => {
                     </div>
                 </div>
             ) : (
-                <Skleton/>
+                <Skleton />
             )}
         </>
     );
 };
 
-export default Home_comp;
+export default Closed_comp;
