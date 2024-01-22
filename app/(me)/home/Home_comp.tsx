@@ -10,7 +10,7 @@ const Home_comp: React.FC<Home_compProps> = () => {
     const [loading, setLoading] = useState(true);
     const [orders, setOrders] = useState([]);
 
-    const socket = io("https://dotlabs.onrender.com");
+    const socket = io(`${process.env.NEXT_PUBLIC_API}`);
 
     useEffect(() => {
         if (!socket.connected) {

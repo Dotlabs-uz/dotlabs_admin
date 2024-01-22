@@ -18,7 +18,7 @@ function OrdersItem({ item, idx }: any) {
 
         axios
             .patch(
-                `https://dotlabs.onrender.com/applications/${item?._id}`,
+                `${process.env.NEXT_PUBLIC_API}/applications/${item?._id}`,
                 {
                     status: stat,
                 },

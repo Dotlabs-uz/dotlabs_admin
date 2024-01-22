@@ -11,7 +11,7 @@ const Closed_comp: React.FC<Closed_compProps> = () => {
     const [closedOrders, setClosedOrders] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const socket = io("https://dotlabs.onrender.com");
+    const socket = io(`${process.env.NEXT_PUBLIC_API}`);
 
 
     useEffect(() => {

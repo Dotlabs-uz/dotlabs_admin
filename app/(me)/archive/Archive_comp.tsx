@@ -20,7 +20,7 @@ const Archive_comp: React.FC<Archive_compProps> = () => {
 
     const [heanleChangeStatus, setHeanleChangeStatus] = useState("all");
 
-    const socket = io("https://dotlabs.onrender.com");
+    const socket = io(`${process.env.NEXT_PUBLIC_API}`);
 
     useEffect(() => {
         if (!socket.connected) {
