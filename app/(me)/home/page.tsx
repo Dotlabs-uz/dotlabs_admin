@@ -1,6 +1,3 @@
-import OrdersItem from "@/components/OrdersItem";
-import { Suspense } from "react";
-import { FaRegEye } from "react-icons/fa";
 import Home_comp from "./Home_comp";
 
 export default async function Home() {

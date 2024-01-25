@@ -38,15 +38,7 @@ function OrdersItem({ item, idx }: any) {
 
     return (
         <div
-            className={`flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc] ${
-                item?.status === "new"
-                    ? "bg-[#F7D17C] text-black"
-                    : item?.status === "inProgress"
-                    ? "bg-[#F98080] text-black"
-                    : item?.status === "pending"
-                    ? "bg-[#BB79F8] text-black"
-                    : "text-black"
-            }`}
+            className={`flex items-center justify-between py-3 pr-5 pl-3 border-b border-b-[#cccccc]`}
         >
             <div className="flex items-start gap-3">
                 <span>{idx + 1}.</span>
@@ -61,82 +53,50 @@ function OrdersItem({ item, idx }: any) {
             <p>{item?.status}</p>
 
             <div className="relative">
-                {item?.status === "new" ||
-                item?.status === "inProgress" ||
-                item?.status === "pending" ? (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className={"outline-none"}>
-                            <BsThreeDots size={25} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                            className={"flex flex-col -ml-16 -mt-11 gap-1"}
+                <DropdownMenu>
+                    <DropdownMenuTrigger className={"outline-none"}>
+                        <BsThreeDots size={25} className="cursor-pointer" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                        className={"flex flex-col -ml-16 -mt-11 gap-1"}
+                    >
+                        <Button
+                            onClick={(e: any) => ChangeStatus("inProgress")}
+                            disabled={loading}
+                            className={"bg-[#2387f2] hover:bg-[#23ABF2]"}
                         >
-                            {item?.status === "new" ? (
-                                <Button
-                                    onClick={(e:any) => ChangeStatus("inProgress")}
-                                    variant={"secondary"}
-                                    disabled={loading}
-                                >
-                                    В процессе
-                                </Button>
-                            ) : item?.status === "inProgress" ? (
-                                <>
-                                    <Button
-                                        onClick={() => ChangeStatus("pending")}
-                                        disabled={loading}
-                                    >
-                                        Ждём ответа
-                                    </Button>
-                                    <Button
-                                        onClick={() => ChangeStatus("closed")}
-                                        disabled={loading}
-                                    >
-                                        Получили заказ
-                                    </Button>
-                                    <Button
-                                        onClick={() =>
-                                            ChangeStatus("noResponse")
-                                        }
-                                        disabled={loading}
-                                    >
-                                        Не ответил
-                                    </Button>
-                                    <Button
-                                        onClick={() => ChangeStatus("declined")}
-                                        variant={"destructive"}
-                                        disabled={loading}
-                                    >
-                                        Отказ
-                                    </Button>
-                                </>
-                            ) : item?.status === "pending" ? (
-                                <>
-                                    <Button
-                                        onClick={() => ChangeStatus("closed")}
-                                        disabled={loading}
-                                    >
-                                        Получили заказ
-                                    </Button>
-                                    <Button
-                                        disabled={loading}
-                                        onClick={() =>
-                                            ChangeStatus("noResponse")
-                                        }
-                                    >
-                                        Не ответил
-                                    </Button>
-                                    <Button
-                                        disabled={loading}
-                                        onClick={() => ChangeStatus("declined")}
-                                        variant={"destructive"}
-                                    >
-                                        Отказ
-                                    </Button>
-                                </>
-                            ) : null}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                ) : null}
+                            В процессе
+                        </Button>
+                        <Button
+                            onClick={() => ChangeStatus("pending")}
+                            disabled={loading}
+                            className={"bg-[#2387f2] hover:bg-[#23ABF2]"}
+                        >
+                            Ждём ответа
+                        </Button>
+                        <Button
+                            onClick={() => ChangeStatus("closed")}
+                            disabled={loading}
+                            className={"bg-[#2387f2] hover:bg-[#23ABF2]"}
+                        >
+                            Получили заказ
+                        </Button>
+                        <Button
+                            onClick={() => ChangeStatus("noResponse")}
+                            disabled={loading}
+                            className={"bg-[#2387f2] hover:bg-[#23ABF2]"}
+                        >
+                            Не ответил
+                        </Button>
+                        <Button
+                            onClick={() => ChangeStatus("declined")}
+                            variant={"destructive"}
+                            disabled={loading}
+                        >
+                            Отказ
+                        </Button>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </div>
     );
