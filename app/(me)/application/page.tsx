@@ -1,13 +1,13 @@
 import React from "react";
-import Closed_comp from "./Closed_comp";
+import Applicaton_comp from "./Applicaton_comp";
 
-function ClosedOrders() {
+function ApplicationPage() {
     return (
         <div>
             <h2 className="text-3xl mb-5">Полученные заказы</h2>
-			<Closed_comp />
+			<Applicaton_comp />
         </div>
     );
 }
 
-export default ClosedOrders;
+export default ApplicationPage;

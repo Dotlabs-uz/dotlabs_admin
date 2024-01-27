@@ -4,9 +4,9 @@ import Skleton from "@/components/Skeleton";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-interface Home_compProps {}
+interface Application_compProps {}
 
-const Home_comp: React.FC<Home_compProps> = () => {
+const Application_comp: React.FC<Application_compProps> = () => {
     const [sourceArchiveOrders, setSourceArchiveOrders] = useState([]);
     const [archiveOrders, setArchiveOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -111,4 +111,4 @@ const Home_comp: React.FC<Home_compProps> = () => {
     );
 };
 
-export default Home_comp;
+export default Application_comp;
