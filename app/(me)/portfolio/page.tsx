@@ -5,6 +5,7 @@ import AddProjectModal from "@/components/portfolioChild/AddProjectModal";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PortfolioItem from "@/components/portfolioChild/PortfolioItem";
+import { Toaster } from "@/components/ui/toaster";
 
 function Portfolio() {
     const [portfoliosArr, setPortfoliosArr] = useState<any>(null);
@@ -64,7 +65,7 @@ function Portfolio() {
             {
                 modalHandel && <AddProjectModal setModalHandel={setModalHandel}/>
             }
-            
+            <Toaster />
         </div>
     );
 }

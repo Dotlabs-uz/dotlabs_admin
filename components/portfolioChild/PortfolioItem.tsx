@@ -1,5 +1,10 @@
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { Button } from "../ui/button";
+import { ToastAction } from "../ui/toast";
+import { useToast } from "../ui/use-toast";
+import { useState } from "react";
+import ChangeProject from "./ChangeProject";
 
 interface PortfolioItemProps {
     item: {
@@ -7,13 +12,17 @@ interface PortfolioItemProps {
         title: string;
         description: string;
         _id: string;
+        url: string;
     };
 }
 
 const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
     item,
 }) => {
+    const [changeProjectHandler, setChangeProjectHandler] = useState(false);
     const [cookies] = useCookies(["token"]);
+
+    const { toast } = useToast();
 
     const deletePoject = () => {
         try {
@@ -30,27 +39,52 @@ const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
 
     return (
         <div className="border-2 border-white rounded-md shadow-md w-full overflow-hidden">
-            <div className="w-full h-[250px]">
-                <img src={item.image} alt="" className="w-full h-full" />
-            </div>
-            <div className="bg-white p-5 flex flex-col gap-3">
-                <h2 className="text-lg font-semibold">{item.title}</h2>
-                <p className="text-sm">{item.description}</p>
-                <button className="bg-[#0000ff10] px-2 py-1 rounded-md text-xs w-fit">
-                    Web site
-                </button>
-                <div className="mt-2 w-full flex items-center gap-2">
-                    <button className="bg-[#23ABF2] px-5 py-1 rounded-md text-white w-full">
-                        Change
-                    </button>
-                    <button
-                        onClick={deletePoject}
-                        className="bg-[red] px-5 py-1 rounded-md text-white w-full"
-                    >
-                        Delete
-                    </button>
-                </div>
-            </div>
+            {!changeProjectHandler ? (
+                <>
+                    <div className="w-full h-[250px]">
+                        <img
+                            src={item.image}
+                            alt=""
+                            className="w-full h-full"
+                        />
+                    </div>
+                    <div className="bg-white p-5 flex flex-col gap-3">
+                        <h2 className="text-lg font-semibold">{item.title}</h2>
+                        <p className="text-sm">{item.description}</p>
+                        <button className="bg-[#0000ff10] px-2 py-1 rounded-md text-xs w-fit">
+                            {item.url}
+                        </button>
+                        <div className="mt-2 w-full flex items-center gap-2">
+                            <Button onClick={()=> setChangeProjectHandler(true)} className="px-5 py-1 rounded-md text-white w-full">
+                                Change
+                            </Button>
+                            <Button
+                                className="px-5 py-1 w-full"
+                                variant="destructive"
+                                onClick={() => {
+                                    toast({
+                                        title: "Потвердите действие!",
+                                        description: `Удаление проекта ${item.title}`,
+                                        action: (
+                                            <ToastAction
+                                                altText="Goto schedule to undo"
+                                                onClick={deletePoject}
+                                                className="bg-[red] text-white hover:bg-[#ff3636]"
+                                            >
+                                                Delete
+                                            </ToastAction>
+                                        ),
+                                    });
+                                }}
+                            >
+                                Delete
+                            </Button>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <ChangeProject setChangeProjectHandler={setChangeProjectHandler} item={item}/>
+            )}
         </div>
     );
 };
