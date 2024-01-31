@@ -14,10 +14,11 @@ interface PortfolioItemProps {
         _id: string;
         url: string;
     };
+    renderHandelFunk:() => void;
 }
 
 const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
-    item,
+    item,renderHandelFunk
 }) => {
     const [changeProjectHandler, setChangeProjectHandler] = useState(false);
     const [cookies] = useCookies(["token"]);
@@ -33,7 +34,13 @@ const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
                         Authorization: cookies?.token?.token,
                     },
                 }
-            );
+            )
+            .then((res) => {
+                if (res.status === 200 || res.status === 201){
+                    renderHandelFunk()
+                }
+            })
+            
         } catch (err) {}
     };
 
@@ -83,7 +90,7 @@ const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
                     </div>
                 </>
             ) : (
-                <ChangeProject setChangeProjectHandler={setChangeProjectHandler} item={item}/>
+                <ChangeProject renderHandelFunk={renderHandelFunk} setChangeProjectHandler={setChangeProjectHandler} item={item}/>
             )}
         </div>
     );

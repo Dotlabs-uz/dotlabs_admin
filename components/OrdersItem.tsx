@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import {
@@ -16,14 +17,13 @@ import {
 } from "@/components/ui/tooltip";
 import { TableCell, TableRow } from "./ui/table";
 import { GoPencil } from "react-icons/go";
-import moment from"moment";
+import moment from "moment";
 
 function OrdersItem({ item, idx }: any) {
     const [cookies] = useCookies(["token"]);
     const [loading, setLoading] = useState(false);
 
-    const date = moment(item.createdAt).subtract(10, 'days').calendar();
-    
+    const date = moment(item.createdAt).subtract(10, "days").calendar();
 
     function ChangeStatus(stat: string) {
         setLoading(true);
@@ -48,6 +48,30 @@ function OrdersItem({ item, idx }: any) {
             .catch((err) => console.log(err));
     }
 
+    function ChangeNote(e: any) {
+        e.preventDefault();
+
+        axios
+            .patch(
+                `${process.env.NEXT_PUBLIC_API}/applications/${item?._id}`,
+                {
+                    note: e.target["note"].value,
+                },
+                {
+                    headers: {
+                        Authorization: cookies.token.token,
+                    },
+                }
+            )
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    // setLoading(false);
+                    console.log("a");
+                }
+            })
+            .catch((err) => console.log(err));
+    }
+
     return (
         <>
             <TableRow>
@@ -57,9 +81,7 @@ function OrdersItem({ item, idx }: any) {
                     <a href={`tel:+${item?.phone}`}>+{item?.phone}</a>
                 </TableCell>
                 <TableCell className="text-center">{item?.status}</TableCell>
-                <TableCell className="text-center">
-                    {date}
-                </TableCell>
+                <TableCell className="text-center">{date}</TableCell>
                 <TableCell className="text-center relative">
                     <DropdownMenu>
                         <DropdownMenuTrigger className={"outline-none"}>
@@ -72,7 +94,7 @@ function OrdersItem({ item, idx }: any) {
                                         />
                                     </TooltipTrigger>
                                     <TooltipContent>
-                                        <p>Add to library</p>
+                                        <p>{item.note ? item.note : "Пусто"}</p>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
@@ -80,14 +102,25 @@ function OrdersItem({ item, idx }: any) {
                         <DropdownMenuContent
                             className={"-translate-y-1/2 p-3 text-sm"}
                         >
-                            <form className="flex flex-col gap-3">
+                            <form
+                                onSubmit={ChangeNote}
+                                className="flex flex-col gap-3"
+                            >
                                 <textarea
                                     placeholder="Type your message here."
                                     className="border rounded-sm p-2 h-[100px]"
+                                    required
+                                    defaultValue={item.note}
+                                    name="note"
                                 ></textarea>
-                                <Button className="bg-[#2387f2] hover:bg-[#23ABF2]">
-                                    Submit
-                                </Button>
+                                <DropdownMenuItem>
+                                    <Button
+                                        type="submit"
+                                        className="bg-[#2387f2] hover:bg-[#23ABF2] w-full"
+                                    >
+                                        Submit
+                                    </Button>
+                                </DropdownMenuItem>
                             </form>
                         </DropdownMenuContent>
                     </DropdownMenu>

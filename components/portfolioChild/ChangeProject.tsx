@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 interface ChangeProjectProps {
     setChangeProjectHandler:Dispatch<SetStateAction<boolean>>;
     item:any
+    renderHandelFunk:() => void
 }
 
 interface Inputs {
@@ -18,9 +19,12 @@ interface Inputs {
     description: string;
 }
  
-const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangeProjectHandler, item}) => {
+const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangeProjectHandler, item,renderHandelFunk}) => {
     const [cookies] = useCookies(["token"]);
     const [selectedImage, setSelectedImage] = useState(null);
+
+    console.log(item.image);
+    
 
     const {
 		register,
@@ -30,9 +34,6 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangePr
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
 		try {
-            // console.log(data);
-            
-            
             const formData = new FormData();
 			Object.entries(data).forEach(([key, value]) => {
 				if (key === "image") {
@@ -42,8 +43,6 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangePr
                     formData.append(key, value);
 				}
 			});
-
-            
 
 			axios.patch(
 				process.env.NEXT_PUBLIC_API + "/portfolios" + `/${item._id}`,
@@ -57,9 +56,10 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangePr
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setChangeProjectHandler(false)
+                    renderHandelFunk()
                 }
             })
-
+            
 
 		} catch (error) {
 			console.error("Error uploading data:", error);
@@ -84,7 +84,7 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangePr
                         <div className="bg-white h-[220px] rounded-md relative overflow-hidden">
                             {selectedImage ? (
                             <Image
-                                src={selectedImage}
+                                src={selectedImage === null ? item.image : selectedImage}
                                 alt=""
                                 width={400}
                                 height={400}
@@ -92,8 +92,7 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({setChangePr
                             />
                         ) : null}
                             <input
-                                
-                                {...register("image", { required: true })}
+                                {...register("image")}
                                 type="file"
                                 className="w-full h-full opacity-0 z-20 absolute cursor-pointer"
                                 onChange={handleImageChange}

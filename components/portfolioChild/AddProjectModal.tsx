@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 
 interface AddProjectModalProps {
     setModalHandel: Dispatch<boolean>;
+    renderHandelFunk: () => void;
 }
 
 interface Inputs {
@@ -20,49 +21,44 @@ interface Inputs {
 
 const AddProjectModal: React.FC<AddProjectModalProps> = ({
     setModalHandel,
+    renderHandelFunk,
 }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [cookies] = useCookies(["token"]);
 
     const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<Inputs>();
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<Inputs>();
 
-	const onSubmit: SubmitHandler<Inputs> = async (data) => {
-		try {
-            
+    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+        try {
             const formData = new FormData();
-			Object.entries(data).forEach(([key, value]) => {
-				if (key === "image") {
-					formData.append(key,  value[0]);
-                    
-				} else {
+            Object.entries(data).forEach(([key, value]) => {
+                if (key === "image") {
+                    formData.append(key, value[0]);
+                } else {
                     formData.append(key, value);
-				}
-			});
-
-			axios.post(
-				process.env.NEXT_PUBLIC_API + "/portfolios",
-				formData,
-				{
-					headers: {
-						Authorization: cookies?.token?.token,
-					},
-				}
-			)
-            .then((res) => {
-                if (res.status === 200 || res.status === 201) {
-                    setModalHandel(false)
                 }
-            })
+            });
 
-
-		} catch (error) {
-			console.error("Error uploading data:", error);
-		}
-	};
+            axios
+                .post(process.env.NEXT_PUBLIC_API + "/portfolios", formData, {
+                    headers: {
+                        Authorization: cookies?.token?.token,
+                    },
+                })
+                .then((res) => {
+                    if (res.status === 200 || res.status === 201) {
+                        setModalHandel(false);
+                        renderHandelFunk();
+                    }
+                });
+        } catch (error) {
+            console.error("Error uploading data:", error);
+        }
+    };
 
     const handleImageChange = (e: any) => {
         const file = e.target.files[0];
@@ -84,10 +80,7 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({
                     className="absolute top-3 right-3 cursor-pointer"
                     onClick={() => setModalHandel(false)}
                 />
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex gap-10"
-                >
+                <form onSubmit={handleSubmit(onSubmit)} className="flex gap-10">
                     <div className="flex flex-col gap-5">
                         <div className="bg-white h-[270px] w-[450px] rounded-md relative overflow-hidden">
                             {selectedImage ? (
