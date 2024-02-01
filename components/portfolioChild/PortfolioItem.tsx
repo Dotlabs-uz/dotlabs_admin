@@ -42,7 +42,7 @@ const PortfolioItem: React.FunctionComponent<PortfolioItemProps> = ({
             })
             
         } catch (err) {}
-    };
+    };    
 
     return (
         <div className="border-2 border-white rounded-md shadow-md w-full overflow-hidden">
