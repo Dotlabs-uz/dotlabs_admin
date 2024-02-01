@@ -102,7 +102,7 @@ const ChangeProject: React.FunctionComponent<ChangeProjectProps> = ({
                             alt=""
                             width={400}
                             height={400}
-                            className="w-full h-full absolute top-0 left-0 z-20"
+                            className="w-full h-full absolute top-0 left-0"
                         />
                     )}
                     <input
