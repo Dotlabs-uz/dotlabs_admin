@@ -12,6 +12,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 
 interface Application_compProps {}
 
@@ -46,7 +47,6 @@ const Application_comp: React.FC<Application_compProps> = () => {
     }, []);
 
     useEffect(() => {
-        console.log(sourceArchiveOrders);
 
         const arr = sourceArchiveOrders.filter((item: any) => {
             if (item.status === heanleChangeStatus) {
@@ -62,66 +62,66 @@ const Application_comp: React.FC<Application_compProps> = () => {
             {!loading ? (
                 <>
                     <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-fit mb-3 text-sm bg-white">
-                        <button
+                        <Button
                             onClick={() => setHeanleChangeStatus("new")}
                             className={`${
                                 heanleChangeStatus === "new"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all border-r border-gray-300 rounded-none`}
                         >
                             Новые
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => setHeanleChangeStatus("inProgress")}
                             className={`${
                                 heanleChangeStatus === "inProgress"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all border-r border-gray-300 rounded-none`}
                         >
                             В процессе
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => setHeanleChangeStatus("pending")}
                             className={`${
                                 heanleChangeStatus === "pending"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all border-r border-gray-300 rounded-none`}
                         >
                             Ожидающие
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => setHeanleChangeStatus("noResponse")}
                             className={`${
                                 heanleChangeStatus === "noResponse"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all border-r border-gray-300 rounded-none`}
                         >
                             Не ответили
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => setHeanleChangeStatus("closed")}
                             className={`${
                                 heanleChangeStatus === "closed"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 border-r border-gray-300 rounded-none`}
                         >
                             Закрытые
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                             onClick={() => setHeanleChangeStatus("declined")}
                             className={`${
                                 heanleChangeStatus === "declined"
                                     ? "bg-[#23ABF2] text-white"
-                                    : null
-                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6`}
+                                    : "bg-[white] text-black"
+                            } hover:bg-[#23ABF2] hover:text-white transition-all py-[6px] px-6 rounded-none`}
                         >
                             Отказы
-                        </button>
+                        </Button>
                     </div>
                     <div className="overflow-x-auto shadow-md sm:rounded-lg min-h-[80vh] relative pb-[80px]">
                         {/* <div className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

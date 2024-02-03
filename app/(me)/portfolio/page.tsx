@@ -7,6 +7,7 @@ import axios from "axios";
 import PortfolioItem from "@/components/portfolioChild/PortfolioItem";
 import { Toaster } from "@/components/ui/toaster";
 import Skleton from "@/components/Skeleton";
+import { Button } from "@/components/ui/button";
 
 function Portfolio() {
     const [portfoliosArr, setPortfoliosArr] = useState<any>(null);
@@ -30,12 +31,12 @@ function Portfolio() {
         <>
             <div className="flex items-center justify-between mb-5">
                 <h2 className="text-3xl">Portfolio</h2>
-                <button
-                    className="p-2 rounded-full bg-white drop-shadow-md"
+                <Button
+                    className="p-2 rounded-full bg-white hover:bg-white drop-shadow-md"
                     onClick={() => setModalHandel(true)}
                 >
                     <VscAdd size={25} color="#23ABF2" />
-                </button>
+                </Button>
             </div>
 
             {portfoliosArr ? (
